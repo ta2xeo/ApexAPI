@@ -18,9 +18,6 @@ let app = new Vue ({
       })
           .then(function(res){
             console.log(res);
-
-            // LaravelData = res.data.body;
-            // console.log(LaravelData);
           })
           .catch(function(res){
             console.log(res);

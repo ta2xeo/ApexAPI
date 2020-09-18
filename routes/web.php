@@ -18,11 +18,11 @@ use Illuminate\Http\Request;
 Route::get('/', function () {
     return \File::get(public_path() . '/myPublic/index.html');
 });
-// Route::get('/profile', [ApexController::class, 'getProfile']);
-Route::get('/profile', function (Request $request) {
-    return response()->json($request);
-});
-Route::get('/apex', [ApexController::class, 'getUser']);
+Route::get('/profile', [ApexController::class, 'getProfile']);
+// Route::get('/profile', function (Request $request) {
+//     return response()->json($request);
+// });
+Route::get('/search', [ApexController::class, 'getUser']);
 
 // Route::get('/', function () {
 //     return view('welcome');
