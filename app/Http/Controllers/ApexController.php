@@ -26,6 +26,7 @@ class ApexController extends Controller
 
         $result = self::request($url,"GET",null,$headers);//request()は下に記述
         
+        //sample
         // if ($result["status_code"] !== 200) {
         //     $response["message"] = "通信エラー";
         //     return new JsonResponse($response, 500);
@@ -36,7 +37,9 @@ class ApexController extends Controller
         //↓インスタンスで返してる。何が問題なんやろ
         // return new JsonResponse($response);
         //↓jsonで返す、記事によるとこれもインスタンスと言ってる奴がある？
-        return response()->json($result);
+        // return response()->json($result);
+        //そのまま返せばよくね？
+        return $result;
     }
     
     public function getUser(Request $request) {
@@ -77,7 +80,9 @@ class ApexController extends Controller
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);//error対策
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-     
+        
+        //sample
+        //postする時用？
         // if (!empty($body)) {
         //     curl_setopt($curl, CURLOPT_POSTFIELDS, $body);
         // }
@@ -87,15 +92,16 @@ class ApexController extends Controller
      
         $httpCode = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
         curl_close($curl); // curlの処理終わり
-     
-        $result = [];
-        $result['status_code'] = $httpCode;
-        $result['body'] = $body;
+        
+        //sample
+        // $result = [];
+        // $result['status_code'] = $httpCode;
+        // $result['body'] = $body;
 
-        //整形して返す
+        //自分で作った統一規格で返したい時
         // return $result;
         //そのまま返す
-        return $responseJsonText;
+        return $body;
         
         
      }

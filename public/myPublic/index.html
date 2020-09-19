@@ -9,21 +9,43 @@
 <body>
   <h1>hello from ApexAPI</h1>
   <div id="topWrapper">
-    <div>
-      <label for="name">ユーザーネーム：</label>
-      <input type="text" v-model.lazy="userName" placeholder="user name"/>
+    <div id="searchUserContainer">
+
     </div>
-    <div>
-      <label for="PC">PC</label>
-      <input type="radio" id="PC" value="origin" v-model="platform">
-      <label for="PS4">PS4</label>
-      <input type="radio" id="PS4" value="psn" v-model="platform">
-      <label for="xbox">xbox</label>
-      <input type="radio" id="xbox" value="xbl" v-model="platform">
+    <div id="requestContainer">
+      <div>
+        <label for="name">ユーザーネーム：</label>
+        <input type="text" v-model.lazy="userName" placeholder="user name"/>
+      </div>
+      <div>
+        <label for="PC">PC</label>
+        <input type="radio" id="PC" value="origin" v-model="platform">
+        <label for="PS4">PS4</label>
+        <input type="radio" id="PS4" value="psn" v-model="platform">
+        <label for="xbox">xbox</label>
+        <input type="radio" id="xbox" value="xbl" v-model="platform">
+      </div>
+      <button v-on:click="onclick">送信</button>
     </div>
-    <button v-on:click="onclick">送信</button>
-    <div>
-      <!-- 名前、ランク、最近いつプレイしたかを表示させる -->
+    
+
+    <div id="responseContainer">
+      <!--todo 名前、ランク、最近いつプレイしたかを表示させる -->
+      <div>
+        <h3>{{userName}}</h3>
+      </div>
+      <div>
+        <h3>総キル数</h3>
+        <div>{{killCount}}</div>
+      </div>
+      <div>
+        <h3>rank</h3>
+        <div>{{rank}}</div>
+      </div>
+      <div>
+        <h3>最近いつプレイしたか</h3>
+        <div>{{recentPlay}}</div>
+      </div>
     </div>
     
   </div>
