@@ -41,6 +41,36 @@ class ApexController extends Controller
         //そのまま返せばよくね？
         return $result;
     }
+    public function getSessions(Request $request) {
+        // ↓をURLにいれる
+        $platform = $request->platform;
+        $userName = $request->name;
+        $baseUrl = "https://public-api.tracker.gg/v2/apex/standard/profile/";
+        $path = $platform."/".$userName.'/sessions';
+        $url = $baseUrl.$path;
+        $headers = [
+            "Content-Type: application/json",
+            "TRN-Api-Key: ceedbeab-cfe3-4599-bc5d-bb63ecc77ba5",
+            "Accept: application/json"
+        ];
+
+        $result = self::request($url,"GET",null,$headers);//request()は下に記述
+        
+        //sample
+        // if ($result["status_code"] !== 200) {
+        //     $response["message"] = "通信エラー";
+        //     return new JsonResponse($response, 500);
+        // }
+        // $response["body"] = $result["body"];
+        // $response["message"] = "success";
+
+        //↓インスタンスで返してる。何が問題なんやろ
+        // return new JsonResponse($response);
+        //↓jsonで返す、記事によるとこれもインスタンスと言ってる奴がある？
+        // return response()->json($result);
+        //そのまま返せばよくね？
+        return $result;
+    }
     
     public function getUser(Request $request) {
         $platform = $request->platform;

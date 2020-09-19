@@ -19,7 +19,8 @@ Route::get('/', function () {
     return \File::get(public_path() . '/myPublic/index.html');
 });
 Route::get('/profile', [ApexController::class, 'getProfile']);
-// Route::get('/profile', function (Request $request) {
+Route::get('/sessions', [ApexController::class, 'getSessions']);
+// Route::get('/sessions', function (Request $request) {
 //     return response()->json($request);
 // });
 Route::get('/search', [ApexController::class, 'getUser']);
