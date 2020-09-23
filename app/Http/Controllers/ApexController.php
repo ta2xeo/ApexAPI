@@ -13,19 +13,9 @@ class ApexController extends Controller
         // ↓をURLにいれる
         $platform = $request->platform;
         $userName = $request->name;
-        $response = [];
         //アクセストークンはAPIキーだけだといらない
-        $baseUrl = "https://public-api.tracker.gg/v2/apex/standard/profile/";
-        $path = $platform."/".$userName;
-        $url = $baseUrl.$path;
-        $headers = [
-            "Content-Type: application/json",
-            "TRN-Api-Key: ceedbeab-cfe3-4599-bc5d-bb63ecc77ba5",
-            "Accept: application/json"
-        ];
+        $result = $this->getApi("/profile/{$platform}/{$userName}");
 
-        $result = self::request($url,"GET",null,$headers);//request()は下に記述
-        
         //sample
         // if ($result["status_code"] !== 200) {
         //     $response["message"] = "通信エラー";
@@ -42,20 +32,10 @@ class ApexController extends Controller
         return $result;
     }
     public function getSessions(Request $request) {
-        // ↓をURLにいれる
         $platform = $request->platform;
         $userName = $request->name;
-        $baseUrl = "https://public-api.tracker.gg/v2/apex/standard/profile/";
-        $path = $platform."/".$userName.'/sessions';
-        $url = $baseUrl.$path;
-        $headers = [
-            "Content-Type: application/json",
-            "TRN-Api-Key: ceedbeab-cfe3-4599-bc5d-bb63ecc77ba5",
-            "Accept: application/json"
-        ];
+        $result = $this->getApi("/profile/{$platform}/{$userName}/sessions");
 
-        $result = self::request($url,"GET",null,$headers);//request()は下に記述
-        
         //sample
         // if ($result["status_code"] !== 200) {
         //     $response["message"] = "通信エラー";
@@ -76,20 +56,10 @@ class ApexController extends Controller
         $platform = $request->platform;
         $userName = $request->name;
         $response = [];
-        //アクセストークンはAPIキーだけだといらない
-        $baseUrl = "https://public-api.tracker.gg/v2/apex/standard/search?";
         // $queryParams = "?platform=origin&query=pygmalion8787";
         $queryParams = "platform=".$platform."&"."query=".$userName;
-        
-        $url = $baseUrl.$queryParams;
-        $headers = [
-            "Content-Type: application/json",
-            "TRN-Api-Key: ceedbeab-cfe3-4599-bc5d-bb63ecc77ba5",
-            "Accept: application/json"
-        ];
+        $result = $this->getApi("/search?{$queryParams}");
 
-        $result = self::request($url,"GET",null,$headers);//request()は下に記述
-        
         if ($result["status_code"] !== 200) {
             $response["message"] = "通信エラー";
             return new JsonResponse($response, 500);
@@ -102,7 +72,26 @@ class ApexController extends Controller
         //↓jsonで返す、記事によるとこれもインスタンスと言ってる奴がある？
         return response()->json($response);
     }
-    
+
+    private function requestApi(string $http_method, string $path)
+    {
+        //アクセストークンはAPIキーだけだといらない
+        $baseUrl = "https://public-api.tracker.gg/v2/apex/standard/";
+        $url = $baseUrl.$path;
+        $headers = [
+            "Content-Type: application/json",
+            "TRN-Api-Key: ceedbeab-cfe3-4599-bc5d-bb63ecc77ba5",
+            "Accept: application/json"
+        ];
+
+        return self::request($url, $http_method, null, $headers);//request()は下に記述
+    }
+
+    private function getApi(string $path)
+    {
+        return $this->requestApi('GET', $path);
+    }
+
     private static function request($url, $method, $body, $headers) {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
